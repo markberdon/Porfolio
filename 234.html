@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfolio | Front-End UI/UX Developer</title>
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+  }
+  body, html {
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #eee;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav {
+    background: #1f1f1f;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.1rem;
+    margin: 0 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem 1.3rem;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  nav button:hover,
+  nav button.active {
+    background: #bb86fc;
+    color: #121212;
+  }
+
+  main {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 2rem 4rem;
+    background: #181818;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  section.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Home */
+  #home h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #bb86fc;
+  }
+  #home p {
+    font-size: 1.3rem;
+    max-width: 650px;
+    line-height: 1.6;
+  }
+
+  /* About Me */
+  #about h2 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: #bb86fc;
+  }
+  .about-content {
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .about-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 8px 20px rgba(187, 134, 252, 0.5);
+    margin-bottom: 1.3rem;
+  }
+  #about p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #ddd;
+  }
+
+  /* Skills */
+  #skills h2 {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+    color: #bb86fc;
+  }
+  .skill {
+    width: 350px;
+    margin-bottom: 1.4rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .skill-label {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #eee;
+  }
+  .skill-icon {
+    width: 28px;
+    height: 28px;
+    filter: invert(86%) sepia(14%) saturate(709%) hue-rotate(247deg) brightness(93%) contrast(89%);
+  }
+  .progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #333;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: #bb86fc;
+    width: 0;
+    border-radius: 20px;
+    transition: width 1.2s ease;
+  }
+
+  /* Projects */
+  #projects h2 {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+    color: #bb86fc;
+  }
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    max-width: 700px;
+    text-align: left;
+  }
+  .project {
+    background: #222;
+    padding: 1rem 1.3rem;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(187, 134, 252, 0.3);
+    transition: background 0.3s ease;
+    cursor: default;
+  }
+  .project:hover {
+    background: #bb86fc;
+    color: #121212;
+  }
+  .project-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+  .project-desc {
+    font-size: 1rem;
+    color: #ddd;
+  }
+
+  /* Contact */
+  #contact h2 {
+    font-size: 2.8rem;
+    margin-bottom: 1.3rem;
+    color: #bb86fc;
+  }
+  .contact-info {
+    max-width: 500px;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #ddd;
+    text-align: center;
+  }
+  .contact-info div {
+    margin-bottom: 1.1rem;
+  }
+  .contact-label {
+    font-weight: 700;
+    color: #bb86fc;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    section {
+      padding: 2rem 2rem;
+    }
+    .skill {
+      width: 90vw;
+      max-width: none;
+    }
+    .project-list {
+      max-width: 90vw;
+    }
+    .contact-info {
+      max-width: 90vw;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <button class="nav-btn active" data-target="home">Home</button>
+  <button class="nav-btn" data-target="about">About Me</button>
+  <button class="nav-btn" data-target="skills">Skills</button> 
+  <button class="nav-btn" data-target="projects">Projects</button>
+  <button class="nav-btn" data-target="contact">Contact</button>
+</nav>
+
+<main>
+  <section id="home" class="active">
+    <h1>Hello, I'm Mark</h1>
+    <p>Welcome to my portfolio! I’m a passionate Front-End UI/UX Developer dedicated to creating stunning and user-friendly web applications. Explore my skills, projects, and feel free to get in touch!</p>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about-content">
+      <img class="about-img" src="picnako.jpg" alt="Your Name" />
+      <p>I specialize in crafting responsive, accessible, and visually appealing websites using the latest front-end technologies. With a strong focus on UI/UX design, I ensure every project delivers an exceptional user experience.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+
+    <div class="skill">
+      <div class="skill-label">
+        <img src="https://cdn-icons-png.flaticon.com/24/732/732212.png" alt="HTML icon" class="skill-icon" />
+        HTML
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" data-progress="90%"></div></div>
+    </div>
+
+    <div class="skill">
+      <div class="skill-label">
+        <img src="https://cdn-icons-png.flaticon.com/24/732/732190.png" alt="CSS icon" class="skill-icon" />
+        CSS
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" data-progress="85%"></div></div>
+    </div>
+
+    <div class="skill">
+      <div class="skill-label">
+        <img src="https://cdn-icons-png.flaticon.com/24/5968/5968292.png" alt="JavaScript icon" class="skill-icon" />
+        JavaScript
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" data-progress="60%"></div></div>
+    </div>
+
+    <div class="skill">
+      <div class="skill-label">
+        <img src="https://cdn-icons-png.flaticon.com/24/919/919851.png" alt="React icon" class="skill-icon" />
+        React
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" data-progress="45%"></div></div>
+    </div>
+
+    <div class="skill">
+      <div class="skill-label">
+        <img src="https://cdn-icons-png.flaticon.com/24/2921/2921222.png" alt="UI/UX icon" class="skill-icon" />
+        UI/UX Design
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" data-progress="70%"></div></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-list">
+      <div class="project" tabindex="0">
+        <div class="project-title">Project One</div>
+        <img class="about-img" src="say laba.jpg" alt="Your Name" />
+        <div class="project-desc">A responsive e-commerce website built with React and styled-components.</div>
+      </div>
+      <div class="project" tabindex="0">
+        <div class="project-title">Project Two</div>
+        <img class="about-img" src="b0effcc9-26ee-46ca-b94d-03949b5ad142.jpg" alt="Your Name" />
+        <div class="project-desc">A responsive e-commerce website built with React and styled-components.</div>
+      </div>
+      <div class="project" tabindex="0">
+        <div class="project-title">Project Three</div>
+        <img class="about-img" src="libro.png" alt="Your Name" />
+        <div class="project-desc">A system for book selling.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-info">
+      <div><span class="contact-label">Address:</span> Babag II Lapu-Lapu City Cebu</div>
+      <div><span class="contact-label">Contact Us:</span> +63 (930) 1614-216</div>
+      <div><span class="contact-label">Email Us:</span> markjosephberdon@gmai.com</div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const navButtons = document.querySelectorAll('nav .nav-btn');
+  const sections = document.querySelectorAll('main section');
+  const progressBars = document.querySelectorAll('.progress-bar-fill');
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navButtons.forEach(b => b.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+
+      btn.classList.add('active');
+      const target = btn.getAttribute('data-target');
+      const targetSection = document.getElementById(target);
+      targetSection.classList.add('active');
+
+      if (target === 'skills') {
+        animateProgressBars();
+      } else {
+        resetProgressBars();
+      }
+    });
+  });
+
+  function animateProgressBars() {
+    progressBars.forEach(bar => {
+      const progress = bar.getAttribute('data-progress');
+      bar.style.width = progress;
+    });
+  }
+
+  function resetProgressBars() {
+    progressBars.forEach(bar => {
+      bar.style.width = '0';
+    });
+  }
+
+  // Animate skills bar on page load if skills is default
+  if(document.querySelector('nav .nav-btn.active').getAttribute('data-target') === 'skills'){
+    animateProgressBars();
+  }
+</script>
+
+</body>
+</html>
